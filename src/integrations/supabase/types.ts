@@ -19,34 +19,28 @@ export type Database = {
           created_at: string
           doctor_id: string
           id: string
-          mode: string
-          notes: string | null
           patient_id: string
-          scheduled_at: string
-          status: string
-          updated_at: string
+          reason: string | null
+          scheduled_at: string | null
+          status: Database["public"]["Enums"]["appointment_status"]
         }
         Insert: {
           created_at?: string
           doctor_id: string
           id?: string
-          mode?: string
-          notes?: string | null
           patient_id: string
-          scheduled_at: string
-          status?: string
-          updated_at?: string
+          reason?: string | null
+          scheduled_at?: string | null
+          status?: Database["public"]["Enums"]["appointment_status"]
         }
         Update: {
           created_at?: string
           doctor_id?: string
           id?: string
-          mode?: string
-          notes?: string | null
           patient_id?: string
-          scheduled_at?: string
-          status?: string
-          updated_at?: string
+          reason?: string | null
+          scheduled_at?: string | null
+          status?: Database["public"]["Enums"]["appointment_status"]
         }
         Relationships: [
           {
@@ -61,24 +55,24 @@ export type Database = {
       blood_request_responses: {
         Row: {
           created_at: string
-          donor_id: string
           id: string
+          message: string | null
           request_id: string
-          status: string | null
+          responder_id: string
         }
         Insert: {
           created_at?: string
-          donor_id: string
           id?: string
+          message?: string | null
           request_id: string
-          status?: string | null
+          responder_id: string
         }
         Update: {
           created_at?: string
-          donor_id?: string
           id?: string
+          message?: string | null
           request_id?: string
-          status?: string | null
+          responder_id?: string
         }
         Relationships: [
           {
@@ -92,130 +86,130 @@ export type Database = {
       }
       blood_requests: {
         Row: {
-          blood_type: string
+          blood_group: Database["public"]["Enums"]["blood_group"]
+          city: string | null
+          contact_phone: string
           created_at: string
-          hospital: string | null
+          hospital: string
           id: string
+          is_active: boolean
+          is_urgent: boolean
           lat: number | null
           lng: number | null
           notes: string | null
+          patient_name: string
           requester_id: string
-          status: string
-          units_needed: number | null
-          urgency: string | null
+          units_needed: number
         }
         Insert: {
-          blood_type: string
+          blood_group: Database["public"]["Enums"]["blood_group"]
+          city?: string | null
+          contact_phone: string
           created_at?: string
-          hospital?: string | null
+          hospital: string
           id?: string
+          is_active?: boolean
+          is_urgent?: boolean
           lat?: number | null
           lng?: number | null
           notes?: string | null
+          patient_name: string
           requester_id: string
-          status?: string
-          units_needed?: number | null
-          urgency?: string | null
+          units_needed?: number
         }
         Update: {
-          blood_type?: string
+          blood_group?: Database["public"]["Enums"]["blood_group"]
+          city?: string | null
+          contact_phone?: string
           created_at?: string
-          hospital?: string | null
+          hospital?: string
           id?: string
+          is_active?: boolean
+          is_urgent?: boolean
           lat?: number | null
           lng?: number | null
           notes?: string | null
+          patient_name?: string
           requester_id?: string
-          status?: string
-          units_needed?: number | null
-          urgency?: string | null
+          units_needed?: number
         }
         Relationships: []
       }
       doctors: {
         Row: {
-          bio: string | null
           city: string | null
           consultation_fee: number | null
           created_at: string
-          experience_years: number | null
+          full_name: string
           id: string
+          is_available: boolean
           lat: number | null
           lng: number | null
           qualification: string | null
           rating: number | null
-          specialty: string
-          updated_at: string
+          specialization: string
           user_id: string | null
         }
         Insert: {
-          bio?: string | null
           city?: string | null
           consultation_fee?: number | null
           created_at?: string
-          experience_years?: number | null
+          full_name: string
           id?: string
+          is_available?: boolean
           lat?: number | null
           lng?: number | null
           qualification?: string | null
           rating?: number | null
-          specialty: string
-          updated_at?: string
+          specialization: string
           user_id?: string | null
         }
         Update: {
-          bio?: string | null
           city?: string | null
           consultation_fee?: number | null
           created_at?: string
-          experience_years?: number | null
+          full_name?: string
           id?: string
+          is_available?: boolean
           lat?: number | null
           lng?: number | null
           qualification?: string | null
           rating?: number | null
-          specialty?: string
-          updated_at?: string
+          specialization?: string
           user_id?: string | null
         }
         Relationships: []
       }
-      meds: {
+      medicines: {
         Row: {
-          category: string | null
           created_at: string
-          description: string | null
+          form: string | null
           generic_name: string | null
           id: string
-          image_url: string | null
           manufacturer: string | null
           mrp: number | null
           name: string
-          prescription_required: boolean | null
+          strength: string | null
         }
         Insert: {
-          category?: string | null
           created_at?: string
-          description?: string | null
+          form?: string | null
           generic_name?: string | null
           id?: string
-          image_url?: string | null
           manufacturer?: string | null
           mrp?: number | null
           name: string
-          prescription_required?: boolean | null
+          strength?: string | null
         }
         Update: {
-          category?: string | null
           created_at?: string
-          description?: string | null
+          form?: string | null
           generic_name?: string | null
           id?: string
-          image_url?: string | null
           manufacturer?: string | null
           mrp?: number | null
           name?: string
-          prescription_required?: boolean | null
+          strength?: string | null
         }
         Relationships: []
       }
@@ -224,8 +218,8 @@ export type Database = {
           body: string | null
           created_at: string
           id: string
+          is_read: boolean
           link: string | null
-          read: boolean | null
           title: string
           user_id: string
         }
@@ -233,8 +227,8 @@ export type Database = {
           body?: string | null
           created_at?: string
           id?: string
+          is_read?: boolean
           link?: string | null
-          read?: boolean | null
           title: string
           user_id: string
         }
@@ -242,8 +236,8 @@ export type Database = {
           body?: string | null
           created_at?: string
           id?: string
+          is_read?: boolean
           link?: string | null
-          read?: boolean | null
           title?: string
           user_id?: string
         }
@@ -251,40 +245,30 @@ export type Database = {
       }
       order_items: {
         Row: {
-          created_at: string
           id: string
-          med_id: string
+          med_id: string | null
           med_name: string
           order_id: string
           qty: number
           unit_price: number
         }
         Insert: {
-          created_at?: string
           id?: string
-          med_id: string
+          med_id?: string | null
           med_name: string
           order_id: string
-          qty?: number
+          qty: number
           unit_price: number
         }
         Update: {
-          created_at?: string
           id?: string
-          med_id?: string
+          med_id?: string | null
           med_name?: string
           order_id?: string
           qty?: number
           unit_price?: number
         }
         Relationships: [
-          {
-            foreignKeyName: "order_items_med_id_fkey"
-            columns: ["med_id"]
-            isOneToOne: false
-            referencedRelation: "meds"
-            referencedColumns: ["id"]
-          },
           {
             foreignKeyName: "order_items_order_id_fkey"
             columns: ["order_id"]
@@ -297,34 +281,34 @@ export type Database = {
       orders: {
         Row: {
           created_at: string
-          delivery_address: string | null
+          delivery_address: string
           id: string
           patient_id: string
-          payment_status: string
+          payment_status: Database["public"]["Enums"]["payment_status"]
           pharmacy_id: string
-          status: string
+          status: Database["public"]["Enums"]["order_status"]
           total: number
           updated_at: string
         }
         Insert: {
           created_at?: string
-          delivery_address?: string | null
+          delivery_address: string
           id?: string
           patient_id: string
-          payment_status?: string
+          payment_status?: Database["public"]["Enums"]["payment_status"]
           pharmacy_id: string
-          status?: string
-          total?: number
+          status?: Database["public"]["Enums"]["order_status"]
+          total: number
           updated_at?: string
         }
         Update: {
           created_at?: string
-          delivery_address?: string | null
+          delivery_address?: string
           id?: string
           patient_id?: string
-          payment_status?: string
+          payment_status?: Database["public"]["Enums"]["payment_status"]
           pharmacy_id?: string
-          status?: string
+          status?: Database["public"]["Enums"]["order_status"]
           total?: number
           updated_at?: string
         }
@@ -340,42 +324,42 @@ export type Database = {
       }
       pharmacies: {
         Row: {
-          address: string | null
-          city: string | null
+          address: string
+          city: string
           created_at: string
           id: string
+          is_open: boolean
           lat: number | null
           lng: number | null
           name: string
-          open_24h: boolean | null
           phone: string | null
           rating: number | null
           updated_at: string
           user_id: string | null
         }
         Insert: {
-          address?: string | null
-          city?: string | null
+          address: string
+          city?: string
           created_at?: string
           id?: string
+          is_open?: boolean
           lat?: number | null
           lng?: number | null
           name: string
-          open_24h?: boolean | null
           phone?: string | null
           rating?: number | null
           updated_at?: string
           user_id?: string | null
         }
         Update: {
-          address?: string | null
-          city?: string | null
+          address?: string
+          city?: string
           created_at?: string
           id?: string
+          is_open?: boolean
           lat?: number | null
           lng?: number | null
           name?: string
-          open_24h?: boolean | null
           phone?: string | null
           rating?: number | null
           updated_at?: string
@@ -413,7 +397,7 @@ export type Database = {
             foreignKeyName: "pharmacy_inventory_med_id_fkey"
             columns: ["med_id"]
             isOneToOne: false
-            referencedRelation: "meds"
+            referencedRelation: "medicines"
             referencedColumns: ["id"]
           },
           {
@@ -428,55 +412,37 @@ export type Database = {
       prescriptions: {
         Row: {
           created_at: string
-          doctor_id: string | null
-          encrypted_text: string | null
+          extracted: Json | null
           id: string
           image_url: string | null
-          parsed_drugs: Json | null
+          ocr_text: string | null
           patient_id: string
-          qr_code: string
-          raw_text: string | null
         }
         Insert: {
           created_at?: string
-          doctor_id?: string | null
-          encrypted_text?: string | null
+          extracted?: Json | null
           id?: string
           image_url?: string | null
-          parsed_drugs?: Json | null
+          ocr_text?: string | null
           patient_id: string
-          qr_code?: string
-          raw_text?: string | null
         }
         Update: {
           created_at?: string
-          doctor_id?: string | null
-          encrypted_text?: string | null
+          extracted?: Json | null
           id?: string
           image_url?: string | null
-          parsed_drugs?: Json | null
+          ocr_text?: string | null
           patient_id?: string
-          qr_code?: string
-          raw_text?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "prescriptions_doctor_id_fkey"
-            columns: ["doctor_id"]
-            isOneToOne: false
-            referencedRelation: "doctors"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       profiles: {
         Row: {
-          avatar_url: string | null
-          blood_type: string | null
+          blood_group: Database["public"]["Enums"]["blood_group"] | null
+          city: string | null
           created_at: string
           full_name: string | null
           id: string
-          is_blood_donor: boolean | null
           lat: number | null
           lng: number | null
           phone: string | null
@@ -484,12 +450,11 @@ export type Database = {
           user_id: string
         }
         Insert: {
-          avatar_url?: string | null
-          blood_type?: string | null
+          blood_group?: Database["public"]["Enums"]["blood_group"] | null
+          city?: string | null
           created_at?: string
           full_name?: string | null
           id?: string
-          is_blood_donor?: boolean | null
           lat?: number | null
           lng?: number | null
           phone?: string | null
@@ -497,12 +462,11 @@ export type Database = {
           user_id: string
         }
         Update: {
-          avatar_url?: string | null
-          blood_type?: string | null
+          blood_group?: Database["public"]["Enums"]["blood_group"] | null
+          city?: string | null
           created_at?: string
           full_name?: string | null
           id?: string
-          is_blood_donor?: boolean | null
           lat?: number | null
           lng?: number | null
           phone?: string | null
@@ -561,10 +525,6 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      get_my_role: {
-        Args: never
-        Returns: Database["public"]["Enums"]["app_role"]
-      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -572,15 +532,19 @@ export type Database = {
         }
         Returns: boolean
       }
-      haversine_km: {
-        Args: { lat1: number; lat2: number; lng1: number; lng2: number }
-        Returns: number
-      }
-      show_limit: { Args: never; Returns: number }
-      show_trgm: { Args: { "": string }; Returns: string[] }
     }
     Enums: {
-      app_role: "patient" | "doctor" | "pharmacy" | "admin"
+      app_role: "patient" | "pharmacy" | "doctor" | "admin"
+      appointment_status: "pending" | "confirmed" | "completed" | "cancelled"
+      blood_group: "A+" | "A-" | "B+" | "B-" | "AB+" | "AB-" | "O+" | "O-"
+      order_status:
+        | "pending"
+        | "confirmed"
+        | "preparing"
+        | "out_for_delivery"
+        | "delivered"
+        | "cancelled"
+      payment_status: "pending" | "held" | "released" | "refunded"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -708,7 +672,18 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["patient", "doctor", "pharmacy", "admin"],
+      app_role: ["patient", "pharmacy", "doctor", "admin"],
+      appointment_status: ["pending", "confirmed", "completed", "cancelled"],
+      blood_group: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
+      order_status: [
+        "pending",
+        "confirmed",
+        "preparing",
+        "out_for_delivery",
+        "delivered",
+        "cancelled",
+      ],
+      payment_status: ["pending", "held", "released", "refunded"],
     },
   },
 } as const

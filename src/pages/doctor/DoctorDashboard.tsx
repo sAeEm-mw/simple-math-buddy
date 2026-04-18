@@ -38,8 +38,8 @@ const DoctorDashboard = () => {
       const { data: d } = await supabase.from("doctors").select("id").eq("user_id", user.id).maybeSingle();
       if (!d) {
         const { data: created } = await supabase.from("doctors")
-          .insert({ user_id: user.id, specialty: "General Medicine", qualification: "MBBS",
-            experience_years: 5, consultation_fee: 500, city: "Bangalore", lat: 12.97, lng: 77.59 })
+          .insert({ user_id: user.id, full_name: "New Doctor", specialization: "General Medicine", qualification: "MBBS",
+            consultation_fee: 500, city: "Kharghar", lat: 19.047, lng: 73.07 })
           .select("id").single();
         if (created) { setDoctorId(created.id); await load(created.id); }
         else setLoading(false);
@@ -49,7 +49,7 @@ const DoctorDashboard = () => {
     })();
   }, [user?.id]);
 
-  const setStatus = async (id: string, status: string) => {
+  const setStatus = async (id: string, status: "pending" | "confirmed" | "completed" | "cancelled") => {
     const { error } = await supabase.from("appointments").update({ status }).eq("id", id);
     if (error) toast.error(error.message); else toast.success(`Marked ${status}`);
     if (doctorId) load(doctorId);
