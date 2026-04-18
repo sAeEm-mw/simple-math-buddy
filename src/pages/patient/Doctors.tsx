@@ -52,7 +52,7 @@ const Doctors = () => {
     try {
       await supabase.from("appointments").insert({
         patient_id: user.id, doctor_id: selectedDoctor.id,
-        scheduled_at: new Date().toISOString(), mode, status: "confirmed",
+        scheduled_at: new Date().toISOString(), reason: `Mode: ${mode}`, status: "confirmed" as const,
       });
     } catch {}
   };

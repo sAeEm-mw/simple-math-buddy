@@ -41,7 +41,7 @@ const PharmacyOrders = () => {
       const { data: ph } = await supabase.from("pharmacies").select("id, name").eq("user_id", user.id).maybeSingle();
       if (!ph) {
         const { data: created } = await supabase.from("pharmacies")
-          .insert({ user_id: user.id, name: "My Pharmacy", city: "Bangalore", lat: 12.97, lng: 77.59 })
+          .insert({ user_id: user.id, name: "My Pharmacy", address: "Add address", city: "Kharghar", lat: 19.047, lng: 73.07 })
           .select("id").single();
         setPharmacyId(created?.id ?? null);
         if (created) await load(created.id);
@@ -64,8 +64,8 @@ const PharmacyOrders = () => {
   }, [pharmacyId]);
 
   const advance = async (o: any) => {
-    const next = NEXT[o.status]; if (!next) return;
-    const { error } = await supabase.from("orders").update({ status: next }).eq("id", o.id);
+    const next = NEXT[o.status as keyof typeof NEXT]; if (!next) return;
+    const { error } = await supabase.from("orders").update({ status: next as "pending" | "confirmed" | "preparing" | "out_for_delivery" | "delivered" | "cancelled" }).eq("id", o.id);
     if (error) toast.error(error.message); else toast.success(`Marked ${next}`);
   };
 

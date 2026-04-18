@@ -60,7 +60,7 @@ const ScanPrescription = () => {
     if (!user || !parsed) return;
     setBusy(true);
     const { error } = await supabase.from("prescriptions").insert({
-      patient_id: user.id, raw_text: rawText, parsed_drugs: parsed as any,
+      patient_id: user.id, ocr_text: rawText, extracted: parsed as any,
     });
     setBusy(false);
     if (error) return toast.error(error.message);
