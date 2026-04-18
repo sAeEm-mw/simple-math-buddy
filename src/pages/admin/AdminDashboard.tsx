@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
-import { Search, ShoppingBag, Droplet, TrendingUp } from "lucide-react";
+import { Search, ShoppingBag, Droplet, TrendingUp, ArrowUpRight } from "lucide-react";
 
 const AdminDashboard = () => {
   const [m, setM] = useState({ searches: 0, orders: 0, gmv: 0, donors: 0 });
@@ -24,23 +24,32 @@ const AdminDashboard = () => {
   }, []);
 
   const tiles = [
-    { label: "Total searches", value: m.searches, icon: Search, color: "text-primary bg-primary/10" },
-    { label: "Active orders", value: m.orders, icon: ShoppingBag, color: "text-accent bg-accent/10" },
-    { label: "GMV", value: `₹${m.gmv.toFixed(0)}`, icon: TrendingUp, color: "text-success bg-success/10" },
-    { label: "Donors contacted", value: m.donors, icon: Droplet, color: "text-blood bg-blood/10" },
+    { label: "Total searches", value: m.searches.toLocaleString(), icon: Search, color: "text-primary bg-primary-soft", trend: "+12%" },
+    { label: "Active orders", value: m.orders.toLocaleString(), icon: ShoppingBag, color: "text-accent bg-accent-soft", trend: "+8%" },
+    { label: "GMV", value: `₹${m.gmv.toFixed(0)}`, icon: TrendingUp, color: "text-success bg-success-soft", trend: "+24%" },
+    { label: "Donors contacted", value: m.donors.toLocaleString(), icon: Droplet, color: "text-blood bg-blood-soft", trend: "+6%" },
   ];
 
   return (
-    <div className="mx-auto max-w-5xl">
-      <h1 className="mb-4 text-2xl font-bold md:text-3xl">Admin dashboard</h1>
-      <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-        {tiles.map((t) => (
-          <Card key={t.label} className="p-5">
-            <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${t.color}`}>
-              <t.icon className="h-5 w-5" />
+    <div className="mx-auto max-w-6xl space-y-6">
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight md:text-4xl">Admin dashboard</h1>
+        <p className="mt-1 text-sm text-muted-foreground">Platform-wide metrics in real time.</p>
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {tiles.map((t, i) => (
+          <Card key={t.label} className="p-5 shadow-soft animate-fade-up hover-lift" style={{ animationDelay: `${i * 50}ms` }}>
+            <div className="flex items-start justify-between">
+              <div className={`flex h-11 w-11 items-center justify-center rounded-xl ${t.color}`}>
+                <t.icon className="h-5 w-5" />
+              </div>
+              <span className="inline-flex items-center gap-0.5 rounded-full bg-success-soft px-2 py-0.5 text-[10px] font-bold text-success">
+                <ArrowUpRight className="h-3 w-3" /> {t.trend}
+              </span>
             </div>
-            <div className="mt-3 text-2xl font-bold">{t.value}</div>
-            <div className="text-xs text-muted-foreground">{t.label}</div>
+            <div className="mt-4 text-3xl font-bold tabular tracking-tight">{t.value}</div>
+            <div className="mt-1 text-xs uppercase tracking-wider text-muted-foreground">{t.label}</div>
           </Card>
         ))}
       </div>
